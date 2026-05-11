@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spotif - Músicas</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 24px; }
+        h1 { margin-bottom: 12px; }
+        form { margin-bottom: 24px; }
+        label { display: block; margin: 6px 0 2px; }
+        input, select { padding: 6px; width: 280px; }
+        button { padding: 6px 12px; margin-top: 8px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 16px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-top: 16px; }
+        .music-card { border: 1px solid #ddd; border-radius: 6px; padding: 10px; }
+        .music-card img { width: 100%; height: 140px; object-fit: cover; border-radius: 4px; background: #f2f2f2; }
+        .row { display: flex; gap: 24px; flex-wrap: wrap; }
+        .card { border: 1px solid #ddd; padding: 16px; border-radius: 6px; }
+        .remove-form { display: inline; }
+    </style>
+</head>
+<body>
+    <h1>Detalhes</h1>
+    <div class="card" style="min-width: 220px;">
+        <h2>Buscar por ID</h2>
+        <form th:action="@{/musicas/buscar}" method="post">
+            <label for="buscarId">ID</label>
+            <input id="buscarId" name="id" type="number" required />
+            <button type="submit">Buscar</button>
+        </form>
+        <div th:if="${musicaBuscada != null}" style="margin-top: 12px;">
+            <strong>Encontrada:</strong>
+            <div th:text="${musicaBuscada.titulo}"></div>
+            <small th:text="${musicaBuscada.artista}"></small>
+        </div>
+    </div>
+</body>
