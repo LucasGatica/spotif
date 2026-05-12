@@ -158,6 +158,11 @@ body{
         <div class="form-grid">
 
             <div class="form-group">
+                <label>ID</label>
+                <input type="number" name="id" required>
+            </div>
+
+            <div class="form-group">
                 <label>Título</label>
                 <input type="text" name="titulo" required>
             </div>
@@ -174,7 +179,10 @@ body{
 
             <div class="form-group">
                 <label>Gênero</label>
-                <input type="text" name="estilosMusical" required>
+                <select name="estilosMusical" required>
+                    <option value="" disabled selected>Selecione</option>
+                    <option th:each="g : ${generos}" th:value="${g}" th:text="${g}"></option>
+                </select>
             </div>
 
         </div>

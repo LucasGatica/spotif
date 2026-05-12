@@ -16,22 +16,33 @@ public class MusicaController {
     private final MusicaService musicaService = new MusicaService();
 
     @GetMapping({"/", "/musicas"})
-    public String listar(Model model) {
+    public String home(Model model) {
         var musicas = musicaService.listarMusicas();
         for (Musica musica : musicas) {
             System.out.println(musica.getTitulo());
         }
         model.addAttribute("musicas", musicas);
+        model.addAttribute("buscaRealizada", false);
+        model.addAttribute("musicaBuscada", null);
+        return "home";
+    }
+
+    @GetMapping("/musicas/adicionar")
+    public String adicionarPagina(Model model) {
         model.addAttribute("generos", GenerosMusicais.values());
-        model.addAttribute("musicaForm", new Musica());
-        return "musicas";
+        return "adicionar";
+    }
+
+    @GetMapping("/musicas/removerPagina")
+    public String removerPagina() {
+        return "remover";
     }
 
     @PostMapping("/musicas")
-    public String adicionar(@ModelAttribute("musicaForm") Musica musica) {
+    public String adicionar(@ModelAttribute Musica musica) {
         Musica musicaAdicionada = musicaService.adicionarMusica(musica);
         System.out.println("musicaAdicionada: " + musicaAdicionada.getTitulo());
-        return "redirect:/musicas";
+        return "redirect:/musicas/adicionar";
     }
 
     @PostMapping("/musicas/remover")
@@ -43,14 +54,19 @@ public class MusicaController {
 
     @PostMapping("/musicas/buscar")
     public String buscar(@RequestParam int id, Model model) {
-        Musica musicaAchada = musicaService.buscarPorId(id);
-        System.out.println("musica encontrada: " + musicaAchada.getTitulo());
         var musicas = musicaService.listarMusicas();
         model.addAttribute("musicas", musicas);
-        model.addAttribute("generos", GenerosMusicais.values());
-        model.addAttribute("musicaForm", new Musica());
-        model.addAttribute("musicaBuscada", musicaAchada);
-        return "musicas";
+        model.addAttribute("buscaRealizada", true);
+
+        try {
+            Musica musicaAchada = musicaService.buscarPorId(id);
+            System.out.println("musica encontrada: " + musicaAchada.getTitulo());
+            model.addAttribute("musicaBuscada", musicaAchada);
+        } catch (RuntimeException e) {
+            model.addAttribute("musicaBuscada", null);
+        }
+
+        return "home";
     }
 
 
