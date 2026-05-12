@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>SpotIF - Adicionar</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Frijole&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins', sans-serif;
+    min-height:100vh;
+    background:
+        linear-gradient(rgba(0,0,0,0.82), rgba(0,0,0,0.92)),
+        url('/src/main/resources/templates/icons/fundo.png');
+    background-size:cover;
+    color:white;
+    padding:30px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    margin-bottom:40px;
+}
+
+.logo-link{
+    text-decoration:none;
+}
+
+.logo{
+    font-family:'Frijole';
+    font-size:50px;
+    color:#6dff74;
+}
+
+.header-actions{
+    display:flex;
+    gap:15px;
+}
+
+.header-actions a{
+    text-decoration:none;
+}
+
+.header-actions button{
+    border:none;
+    padding:12px 18px;
+    border-radius:14px;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.home-btn{
+    background:#2d8cff;
+}
+
+.add-btn{
+    background:#1db954;
+}
+
+.remove-btn{
+    background:#c0392b;
+}
+
+.form-card{
+    max-width:800px;
+    margin:auto;
+    background:rgba(255,255,255,0.08);
+    padding:35px;
+    border-radius:24px;
+}
+
+.form-title{
+    font-size:30px;
+    margin-bottom:30px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.form-group input{
+    padding:15px;
+    border:none;
+    border-radius:14px;
+    background:rgba(255,255,255,0.12);
+    color:white;
+}
+
+.submit-btn{
+    width:100%;
+    margin-top:30px;
+    padding:16px;
+    border:none;
+    border-radius:16px;
+    background:#1db954;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+
+    <a th:href="@{/musicas}" class="logo-link">
+        <div class="logo">SpotIF</div>
+    </a>
+
+    <div class="header-actions">
+        <a th:href="@{/musicas}">
+            <button class="home-btn">Home</button>
+        </a>
+        <a th:href="@{/musicas/adicionar}">
+            <button class="add-btn">+ Adicionar</button>
+        </a>
+        <a th:href="@{/musicas/removerPagina}">
+            <button class="remove-btn">− Remover</button>
+        </a>
+    </div>
+
+</div>
+
+<div class="form-card">
+    <h1 class="form-title">
+        Adicionar música
+    </h1>
+    <form th:action="@{/musicas}" method="post">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Título</label>
+                <input type="text" name="titulo" required>
+            </div>
+
+            <div class="form-group">
+                <label>Artista</label>
+                <input type="text" name="artista" required>
+            </div>
+
+            <div class="form-group">
+                <label>Ano</label>
+                <input type="number" name="ano" required>
+            </div>
+
+            <div class="form-group">
+                <label>Gênero</label>
+                <input type="text" name="estilosMusical" required>
+            </div>
+
+        </div>
+
+        <div class="form-group" style="margin-top:20px;">
+            <label>URL da capa</label>
+            <input type="text" name="ulrCapaDoAlbum">
+
+        </div>
+
+        <button type="submit" class="submit-btn">
+            Salvar Música
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

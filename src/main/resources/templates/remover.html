@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>SpotIF - Remover</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Frijole&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins', sans-serif;
+
+    min-height:100vh;
+
+    background:
+        linear-gradient(rgba(0,0,0,0.82), rgba(0,0,0,0.92)),
+        url('/src/main/resources/templates/icons/fundo.png');
+
+    background-size:cover;
+
+    color:white;
+
+    padding:30px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+
+    margin-bottom:40px;
+}
+
+.logo-link{
+    text-decoration:none;
+}
+
+.logo{
+    font-family:'Frijole';
+    font-size:50px;
+    color:#ff6b6b;
+}
+
+.header-actions{
+    display:flex;
+    gap:15px;
+}
+
+.header-actions a{
+    text-decoration:none;
+}
+
+.header-actions button{
+    border:none;
+    padding:12px 18px;
+    border-radius:14px;
+
+    color:white;
+    font-weight:600;
+
+    cursor:pointer;
+}
+
+.home-btn{
+    background:#2d8cff;
+}
+
+.add-btn{
+    background:#1db954;
+}
+
+.remove-btn{
+    background:#c0392b;
+}
+
+.delete-card{
+    max-width:650px;
+
+    margin:auto;
+
+    background:rgba(255,255,255,0.08);
+
+    padding:35px;
+
+    border-radius:24px;
+}
+
+.delete-title{
+    font-size:30px;
+    margin-bottom:15px;
+}
+
+.delete-subtitle{
+    color:#cfcfcf;
+    margin-bottom:30px;
+}
+
+.delete-form{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.delete-form input{
+    padding:16px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,0.12);
+
+    color:white;
+}
+
+.delete-btn{
+    padding:16px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#c0392b;
+
+    color:white;
+
+    font-size:16px;
+
+    cursor:pointer;
+}
+
+.warning-box{
+    margin-top:25px;
+
+    background:rgba(192,57,43,0.15);
+
+    padding:18px;
+
+    border-radius:18px;
+
+    color:#ffb3aa;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+
+    <a th:href="@{/musicas}" class="logo-link">
+        <div class="logo">SpotIF</div>
+    </a>
+
+    <div class="header-actions">
+
+        <a th:href="@{/musicas}">
+            <button class="home-btn">Home</button>
+        </a>
+
+        <a th:href="@{/musicas/adicionar}">
+            <button class="add-btn">+ Adicionar</button>
+        </a>
+
+        <a th:href="@{/musicas/removerPagina}">
+            <button class="remove-btn">− Remover</button>
+        </a>
+
+    </div>
+
+</div>
+
+<div class="delete-card">
+
+    <h1 class="delete-title">
+        Remover música
+    </h1>
+
+    <p class="delete-subtitle">
+        Digite o ID da música que deseja remover.
+    </p>
+
+    <form th:action="@{/musicas/remover}" method="post" class="delete-form">
+
+        <input
+            type="number"
+            name="id"
+            placeholder="Digite o ID"
+            required
+        >
+
+        <button type="submit" class="delete-btn">
+            Remover Música
+        </button>
+
+    </form>
+
+    <div class="warning-box">
+        ⚠ Essa ação não pode ser desfeita.
+    </div>
+
+</div>
+
+</body>
+</html>

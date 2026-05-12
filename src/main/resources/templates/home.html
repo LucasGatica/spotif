@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>SpotIF - Home</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Frijole&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins', sans-serif;
+    min-height:100vh;
+    background:
+        linear-gradient(rgba(0,0,0,0.82), rgba(0,0,0,0.92)),
+        url('/src/main/resources/templates/icons/fundo.png');
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    color:white;
+    padding:30px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+    margin-bottom:35px;
+}
+
+.logo-link{
+    text-decoration:none;
+}
+
+.logo{
+    font-family:'Frijole';
+    font-size:50px;
+    color:#6dff74;
+}
+
+.header-actions{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.header-actions a{
+    text-decoration:none;
+}
+
+.header-actions button{
+    border:none;
+    padding:12px 18px;
+    border-radius:14px;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+    font-family:'Poppins';
+}
+
+.header-actions button:hover{
+    transform:translateY(-2px);
+}
+
+.home-btn{
+    background:#2d8cff;
+}
+
+.add-btn{
+    background:#1db954;
+}
+
+.remove-btn{
+    background:#c0392b;
+}
+
+.glass-card{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:24px;
+    padding:25px;
+    margin-bottom:30px;
+}
+
+.section-title{
+    font-size:26px;
+    margin-bottom:20px;
+}
+
+.search-form{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.search-form input{
+    flex:1;
+    padding:14px;
+    border:none;
+    border-radius:14px;
+    background:rgba(255,255,255,0.12);
+    color:white;
+}
+
+.search-form button{
+    background:#1db954;
+    border:none;
+    padding:14px 22px;
+    border-radius:14px;
+    color:white;
+    cursor:pointer;
+}
+
+.search-result{
+    margin-top:20px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    background:rgba(255,255,255,0.06);
+    padding:15px;
+    border-radius:18px;
+}
+
+.search-result img{
+    width:80px;
+    height:80px;
+    border-radius:14px;
+    object-fit:cover;
+}
+
+.not-found{
+    margin-top:20px;
+
+    background:rgba(192,57,43,0.15);
+
+    color:#ffb3aa;
+
+    padding:16px;
+
+    border-radius:16px;
+}
+
+.cards{
+    display:grid;
+
+    grid-template-columns:repeat(auto-fill, minmax(240px,1fr));
+
+    gap:22px;
+}
+
+.music-card{
+    background:rgba(255,255,255,0.08);
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    transition:0.3s;
+}
+
+.music-card:hover{
+    transform:translateY(-5px);
+}
+
+.music-card img{
+    width:100%;
+    height:220px;
+
+    object-fit:cover;
+}
+
+.music-info{
+    padding:18px;
+}
+
+.music-title{
+    font-size:18px;
+    font-weight:600;
+}
+
+.music-artist{
+    color:#cfcfcf;
+    margin:8px 0;
+}
+
+.genre{
+    background:#1db954;
+    padding:6px 10px;
+    border-radius:999px;
+    font-size:12px;
+}
+
+.year{
+    color:#b9b9b9;
+    margin-top:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+
+    <a th:href="@{/musicas}" class="logo-link">
+        <div class="logo">SpotIF</div>
+    </a>
+
+    <div class="header-actions">
+        <a th:href="@{/musicas}">
+            <button class="home-btn">Home</button>
+        </a>
+
+        <a th:href="@{/musicas/adicionar}">
+            <button class="add-btn">+ Adicionar</button>
+        </a>
+
+        <a th:href="@{/musicas/removerPagina}">
+            <button class="remove-btn">− Remover</button>
+        </a>
+
+    </div>
+
+</div>
+
+<div class="glass-card">
+
+    <h2 class="section-title">
+        Buscar música
+    </h2>
+
+    <form th:action="@{/musicas/buscar}" method="post" class="search-form">
+
+        <input
+            type="number"
+            name="id"
+            placeholder="Digite o ID da música"
+            required
+        >
+
+        <button type="submit">
+            Buscar
+        </button>
+
+    </form>
+
+    <div class="search-result"
+         th:if="${musicaBuscada != null}">
+
+        <img
+            th:src="${musicaBuscada.ulrCapaDoAlbum}"
+            alt="Capa"
+        >
+
+        <div>
+
+            <div class="music-title"
+                 th:text="${musicaBuscada.titulo}">
+            </div>
+
+            <div class="music-artist"
+                 th:text="${musicaBuscada.artista}">
+            </div>
+        </div>
+    </div>
+
+    <div class="not-found"
+         th:if="${musicaBuscada == null and buscaRealizada}">
+
+        Nenhum resultado encontrado.
+
+    </div>
+
+</div>
+
+<div class="glass-card">
+    <h2 class="section-title">
+        Suas músicas
+    </h2>
+
+    <div class="cards">
+        <div class="music-card"
+             th:each="m : ${musicas}">
+            <img th:src="${m.ulrCapaDoAlbum}" alt="Capa">
+            <div class="music-info">
+                <div class="music-title"
+                     th:text="${m.titulo}">
+                </div>
+                <div class="music-artist"
+                     th:text="${m.artista}">
+                </div>
+                <span class="genre"
+                      th:text="${m.estilosMusical}">
+                </span>
+                <div class="year"
+                     th:text="${m.ano}">
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+
+</body>
+</html>
