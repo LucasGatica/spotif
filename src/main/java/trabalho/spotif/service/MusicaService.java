@@ -39,6 +39,7 @@ public class MusicaService {
             if(musica.getId() == id){
                 System.out.println("removendo "+ musica.getTitulo());
                 musicas.remove(musica);
+                return;
             }
         }
     }
