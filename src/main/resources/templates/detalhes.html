@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Spotif - Músicas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Frijole&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+        body{
+            font-family:'Poppins', sans-serif;
+            min-height:100vh;
+            background:
+                linear-gradient(rgba(247, 2, 2, 0.82), rgb(255, 1, 1)),
+                url('/src/main/resources/templates/icons/fundo.png');
+            background-size:cover;
+            color:rgb(255, 255, 255);
+            padding:30px;
+        }
+        .topbar{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            flex-wrap:wrap;
+            margin-bottom:40px;
+        }
+        .logo{
+            font-family:'Frijole';
+            font-size:50px;
+            color:#ffffff;
+        }
+        .header-actions{
+            display:flex;
+            gap:15px;
+        }
+        .header-actions button{
+            border:none;
+            padding:12px 18px;
+            border-radius:14px;
+            color:white;
+            font-weight:600;
+            cursor:pointer;
+        }
+        .home-btn{
+            background:#911313ce;
+        }
+        .add-btn{
+            background:#ff7301;
+        }
+        .remove-btn{
+            background:#fdcf01;
+        }
+        .search-btn{
+            background:#f3f1f1;
+            border:none;
+            padding:12px 18px;
+            border-radius:14px;
+            color:rgb(245, 0, 0);
+            font-weight:600;
+            cursor:pointer;
+        }
+        .form-card{
+            max-width:800px;
+            margin:auto;
+            background:rgba(255,255,255,0.08);
+            padding:35px;
+            border-radius:24px;
+        }
+        .form-title{
+            font-size:30px;
+            margin-bottom:30px;
+        }
+        .form-grid{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:20px;
+        }
+        .form-group{
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
+        .form-group input{
+            padding:15px;
+            border:none;
+            border-radius:14px;
+            background:rgba(255,255,255,0.12);
+            color:white;
+        }
+        .submit-btn{
+            width:100%;
+            margin-top:30px;
+            padding:16px;
+            border:none;
+            border-radius:16px;
+            background:#b91d1d;
+            color:white;
+            font-size:16px;
+            cursor:pointer;
+        }
+        </style>
+</head>
+<body>
+    <div class="topbar">
+        <a th:href="@{/musicas}" class="logo-link">
+            <div class="logo">SpotIF</div>
+        </a>
+        <div class="header-actions">
+            <a th:href="@{/musicas}">
+                <button class="home-btn">Home</button>
+            </a>
+            <a th:href="@{/musicas/adicionar}">
+                <button class="add-btn">+ Adicionar</button>
+            </a>
+            <a th:href="@{/musicas/removerPagina}">
+                <button class="remove-btn">− Remover</button>
+            </a>
+        </div>
+    </div>
+    <h1 class="form-title">Lista</h1>
+    <div class="form-card">
+        <h2>Buscar por ID</h2>
+        <form th:action="@{/musicas/buscar}" method="post">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="buscarId">ID</label>
+                    <input id="buscarId" name="id" type="text" required />
+                    <button class="search-btn" type="submit">Buscar</button>
+                </div> 
+            </div>
+        </form>
+    </div>
+    <div th:if="${musicaBuscada != null}" style="margin-top: 12px;">
+        <a th:href="${musicaBuscada.ulrCapaDoAlbum}" target="_blank">
+            <img th:src="${musicaBuscada.ulrCapaDoAlbum}" alt="Capa do Álbum" />
+        </a>
+        <div th:text="${musicaBuscada.titulo}"></div>
+        <small th:text="${musicaBuscada.artista}"></small>
+        <small th:text="${musicaBuscada.ano}"></small>
+        <small th:text="${musicaBuscada.estilosMusical}"></small>
+    </div>
+</body>
